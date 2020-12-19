@@ -1,4 +1,13 @@
+import fs from 'fs';
+import lessToJs from 'less-vars-to-js';
 import { defineConfig } from 'umi';
+
+const paletteLess = fs.readFileSync('./src/styles/var.less', 'utf8');
+
+const theme = lessToJs(paletteLess, {
+  resolveVariables: true,
+  stripPrefix: true,
+});
 
 export default defineConfig({
   esbuild: {},
@@ -8,6 +17,7 @@ export default defineConfig({
   define: {
     API_HOST: 'https://localhost',
   },
+  theme,
   layout: {
     name: 'Irelia',
     layout: 'mix',
